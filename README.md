@@ -9,7 +9,7 @@ Mentor: Muzammil Ahmed
 
 Overview :-
 ![image](https://github.com/user-attachments/assets/fa3834f4-89aa-4f06-b16c-43c84d8ad94c)
-![image](https://github.com/user-attachments/assets/acd952ba-f8bf-488f-a485-3a86c517e893)
+
 
 
 The provided Python code implements a basic inventory management system with the following core features:
