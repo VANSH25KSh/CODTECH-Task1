@@ -1,0 +1,83 @@
+import json
+
+def create_library():
+  library = {}
+  return library
+
+def add_book(library, book_id, title, author, quantity):
+  library[book_id] = {'title': title, 'author': author, 'quantity': quantity}
+  return library
+
+def remove_book(library, book_id):
+  if book_id in library:
+    del library[book_id]
+    return library
+  else:
+    print("Book not found.")
+    return library
+
+def update_quantity(library, book_id, new_quantity):
+  if book_id in library:
+    library[book_id]['quantity'] = new_quantity
+    return library
+  else:
+    print("Book not found.")
+    return library
+
+def display_library(library):
+  if not library:
+    print("Library is empty.")
+  else:
+    print("Library:")
+    for book_id, details in library.items():
+      print(f"- ID: {book_id}, Title: {details['title']}, Author: {details['author']}, Quantity: {details['quantity']}")
+
+def save_library(library, filename):
+  with open(filename, 'w') as f:
+    json.dump(library, f)
+
+def load_library(filename):
+  try:
+    with open(filename, 'r') as f:
+      return json.load(f)
+  except FileNotFoundError:
+    return create_library()
+
+# Main program
+library_file = 'library.json'
+library = load_library(library_file)
+
+while True:
+  print("\nLibrary Management System")
+  print("1. Add book")
+  print("2. Remove book")
+  print("3. Update quantity")
+  print("4. Display library")
+  print("5. Save library")
+  print("6. Exit")
+
+  choice = input("Enter your choice: ")
+
+  if choice == '1':
+    book_id = input("Enter book ID: ")
+    title = input("Enter title: ")
+    author = input("Enter author:   
+ ")
+    quantity = int(input("Enter quantity: "))
+    library = add_book(library, book_id, title, author, quantity)
+  elif choice == '2':
+    book_id = input("Enter book ID to remove: ")
+    library = remove_book(library, book_id)
+  elif choice == '3':
+    book_id = input("Enter book ID to update: ")
+    new_quantity = int(input("Enter new quantity: "))
+    library = update_quantity(library, book_id, new_quantity)
+  elif choice == '4':
+    display_library(library)
+  elif choice == '5':
+    save_library(library, library_file)
+    print("Library saved.")
+  elif choice == '6':
+    break
+  else:
+    print("Invalid choice.")
