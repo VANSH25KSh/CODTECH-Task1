@@ -1,0 +1,81 @@
+import json
+
+def create_inventory():
+  inventory = {}
+  return inventory
+
+def add_item(inventory, item_name, quantity, price):
+  inventory[item_name] = {'quantity': quantity, 'price': price}
+  return inventory
+
+def remove_item(inventory, item_name):
+  if item_name in inventory:
+    del inventory[item_name]
+    return inventory
+  else:
+    print("Item not found.")
+    return inventory
+
+def update_quantity(inventory, item_name, new_quantity):
+  if item_name in inventory:
+    inventory[item_name]['quantity'] = new_quantity
+    return inventory
+  else:
+    print("Item not found.")
+    return inventory
+
+def display_inventory(inventory):
+  if not inventory:
+    print("Inventory is empty.")
+  else:
+    print("Inventory:")
+    for item, details in inventory.items():
+      print(f"- {item}: Quantity {details['quantity']}, Price {details['price']}")
+
+def save_inventory(inventory, filename):
+  with open(filename, 'w') as f:
+    json.dump(inventory, f)
+
+def load_inventory(filename):
+  try:
+    with open(filename, 'r') as f:
+      return json.load(f)
+  except FileNotFoundError:
+    return create_inventory()
+
+# Main program
+inventory_file = 'inventory.json'
+inventory = load_inventory(inventory_file)
+
+while True:
+  print("\nInventory Management System")
+  print("1. Add item")
+  print("2. Remove item")
+  print("3. Update quantity")
+  print("4. Display inventory")
+  print("5. Save inventory")
+  print("6. Exit")
+
+  choice = input("Enter your choice: ")
+
+  if choice == '1':
+    item_name = input("Enter item name: ")
+    quantity = int(input("Enter quantity: "))
+    price = float(input("Enter price: "))
+    inventory = add_item(inventory, item_name, quantity, price)
+  elif choice == '2':
+    item_name = input("Enter item name to remove: ")
+    inventory = remove_item(inventory, item_name)
+  elif choice == '3':
+    item_name = input("Enter item name to update: ")
+    new_quantity = int(input("Enter new quantity: "))
+    inventory = update_quantity(inventory, item_name, new_quantity)
+  elif choice == '4':
+    display_inventory(inventory)
+  elif choice == '5':
+    save_inventory(inventory, inventory_file)
+    print("Inventory saved.")
+  elif choice == '6':
+    break
+  else:
+    print("Invalid choice.")
